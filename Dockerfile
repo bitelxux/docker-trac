@@ -14,8 +14,8 @@ RUN apt-get install -y git
 RUN apt-get install -y vim
 RUN apt-get install -y graphviz
 RUN pip install trac mysql-python
-RUN pip install pygments
 RUN pip install docutils
+RUN pip install pygments
 
 RUN trac-admin /var/trac initenv project sqlite:db/trac.db
 RUN echo "#!/bin/bash" > /usr/local/bin/start_trac.sh
@@ -42,7 +42,7 @@ RUN easy_install /tmp/TracPdfPreview-0.1.1-py2.7.egg
 RUN trac-admin /var/trac config set components acct_mgr.* enabled
 RUN trac-admin /var/trac config set components trac.web.auth.loginmodule disabled
 RUN trac-admin /var/trac config set components graphviz.graphviz.graphviz enabled
-RUN trac-admin /var/trac config set components codeexample.code_example_processor.* enabled
+#RUN trac-admin /var/trac config set components codeexample.code_example_processor.* enabled
 RUN trac-admin /var/trac config set components tracpdfpreview.pdfpreview.pdfrenderer enabled
 RUN trac-admin /var/trac config set components tracopt.versioncontrol.git.* enabled
 RUN trac-admin /var/trac config set components themeengine.* enabled
