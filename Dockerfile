@@ -43,7 +43,7 @@ RUN easy_install /tmp/TracPdfPreview-0.1.1-py2.7.egg
 RUN trac-admin /var/trac config set components acct_mgr.* enabled
 RUN trac-admin /var/trac config set components trac.web.auth.loginmodule disabled
 RUN trac-admin /var/trac config set components graphviz.graphviz.graphviz enabled
-#RUN trac-admin /var/trac config set components codeexample.code_example_processor.* enabled
+RUN trac-admin /var/trac config set components codeexample.code_example_processor.* enabled
 RUN trac-admin /var/trac config set components tracpdfpreview.pdfpreview.pdfrenderer enabled
 RUN trac-admin /var/trac config set components tracopt.versioncontrol.git.* enabled
 RUN trac-admin /var/trac config set components themeengine.* enabled
