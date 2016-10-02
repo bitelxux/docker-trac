@@ -48,9 +48,9 @@ RUN trac-admin /var/trac config set components codeexample.code_example_processo
 RUN trac-admin /var/trac config set components tracpdfpreview.pdfpreview.pdfrenderer enabled
 RUN trac-admin /var/trac config set components tracopt.versioncontrol.git.* enabled
 RUN trac-admin /var/trac config set components themeengine.* enabled
+RUN trac-admin /var/trac config set components wikiprint.* enabled
 RUN trac-admin /var/trac config set components tracfullblog.* enabled
 RUN trac-admin /var/trac upgrade
-RUN trac-admin /var/trac config set components wikiprint.* enabled
 
 # enable htpasswd users in AccountManager plugin
 RUN echo '' >> /var/trac/conf/trac.ini
