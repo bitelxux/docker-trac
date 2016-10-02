@@ -73,9 +73,6 @@ RUN sed -i 's/262144/4000000/g' /var/trac/conf/trac.ini
 # logo
 ADD logo.png /var/trac/htdocs/your_project_logo.png
 
-# Other stuff
-RUN echo "172.17.42.1	host" >> /etc/hosts
-
 # Expose the SSH port
 EXPOSE 8000
 CMD ["/usr/local/bin/start_trac.sh"]
