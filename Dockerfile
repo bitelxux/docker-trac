@@ -50,6 +50,7 @@ RUN trac-admin /var/trac config set components tracpdfpreview.pdfpreview.pdfrend
 RUN trac-admin /var/trac config set components tracopt.versioncontrol.git.* enabled
 RUN trac-admin /var/trac config set components themeengine.* enabled
 RUN trac-admin /var/trac config set components wikiprint.* enabled
+RUN trac-admin /var/trac config set components githubsync.api.* enabled
 RUN trac-admin /var/trac config set components tracfullblog.* enabled
 RUN trac-admin /var/trac upgrade
 
