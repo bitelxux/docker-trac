@@ -14,6 +14,8 @@ RUN apt-get install -y subversion
 RUN apt-get install -y git
 RUN apt-get install -y vim
 RUN apt-get install -y graphviz
+RUN apt-get install -y python-imaging
+RUN pip install reportlab html5lib pypdf
 RUN pip install trac mysql-python
 RUN pip install docutils
 RUN pip install pygments
@@ -29,6 +31,7 @@ RUN easy_install https://trac-hacks.org/svn/graphvizplugin/trunk
 RUN easy_install https://trac-hacks.org/svn/codeexamplemacro
 RUN pip install TracThemeEngine
 RUN easy_install https://trac-hacks.org/svn/fullblogplugin
+RUN easy_install https://trac-hacks.org/svn/tracwikiprintplugin/1.0
 #RUN easy_install https://trac-hacks.org/svn/pdfpreviewplugin/1.0/
 #At this moment there is a bug which prevents install from the url 
 #https://trac-hacks.org/ticket/12887
@@ -46,8 +49,8 @@ RUN trac-admin /var/trac config set components tracpdfpreview.pdfpreview.pdfrend
 RUN trac-admin /var/trac config set components tracopt.versioncontrol.git.* enabled
 RUN trac-admin /var/trac config set components themeengine.* enabled
 RUN trac-admin /var/trac config set components tracfullblog.* enabled
-
 RUN trac-admin /var/trac upgrade
+RUN trac-admin /var/trac config set components wikiprint.* enabled
 
 # enable htpasswd users in AccountManager plugin
 RUN echo '' >> /var/trac/conf/trac.ini
