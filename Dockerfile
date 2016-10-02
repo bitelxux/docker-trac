@@ -1,4 +1,4 @@
-# Bitelxux - Sept 2016
+# Bitelxux - Sept-2016
 
 FROM ubuntu:latest
 MAINTAINER bitelxux
