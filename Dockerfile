@@ -9,6 +9,7 @@ ENV DEBIAN_FRONTEND noninteractive
 # Make sure the repository information is up to date
 RUN apt-get update
 
+RUN apt-get install -y cron
 RUN apt-get install -y python-pip
 RUN apt-get install -y libmysqlclient-dev
 RUN apt-get install -y subversion
