@@ -10,6 +10,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update
 
 RUN apt-get install -y cron
+RUN apt-get install -y wget
 RUN apt-get install -y python-pip
 RUN apt-get install -y libmysqlclient-dev
 RUN apt-get install -y subversion
@@ -45,6 +46,10 @@ RUN pip install GitHubSyncPlugin
 ADD TracPdfPreview-0.1.1-py2.7.egg /tmp
 RUN easy_install /tmp/TracPdfPreview-0.1.1-py2.7.egg
 
+# Super plantuml
+RUN apt-get install -y openjdk-8-jre-headless
+wget http://sourceforge.net/projects/plantuml/files/plantuml.jar/download -O /var/trac/plantuml/jar
+
 # enable trac plugins
 RUN trac-admin /var/trac config set components acct_mgr.* enabled
 RUN trac-admin /var/trac config set components acct_mgr.web_ui.LoginModule enabled
@@ -59,6 +64,7 @@ RUN trac-admin /var/trac config set components githubsync.api.* enabled
 RUN trac-admin /var/trac config set components tractoc.* enabled
 RUN trac-admin /var/trac config set components tracwikiextras.* enabled
 RUN trac-admin /var/trac config set components includemacro.* enabled
+RUN trac-admin /var/trac config set components plantuml.* enabled
 RUN trac-admin /var/trac config set components tracfullblog.* enabled
 RUN trac-admin /var/trac upgrade
 
@@ -68,6 +74,11 @@ RUN echo '[account-manager]' >> /var/trac/conf/trac.ini
 RUN echo 'password_store = HtPasswdStore' >> /var/trac/conf/trac.ini
 RUN echo 'htpasswd_hash_type =' >> /var/trac/conf/trac.ini
 RUN echo 'htpasswd_file = /var/trac/.htpasswd' >> /var/trac/conf/trac.ini
+
+# Plantuml stuff
+RUN echo '' >> /var/trac/conf/trac.ini
+RUN echo '[plantuml]' >> /var/trac/conf/trac.ini
+RUN echo plantuml_jar = /var/trac/plantuml.jar
 
 # permissions
 RUN trac-admin /var/trac permission add admin TRAC_ADMIN
