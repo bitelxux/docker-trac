@@ -80,6 +80,10 @@ RUN sed -i 's/262144/4000000/g' /var/trac/conf/trac.ini
 # logo
 ADD logo.png /var/trac/htdocs/your_project_logo.png
 
+# Move trac.ini out of the volume
+RUN mv /var/trac/conf/trac.ini /etc
+RUN ln -s /etc/trac.ini /var/trac/conf
+
 # Expose the SSH port
 EXPOSE 8000
 CMD ["/usr/local/bin/start_trac.sh"]
