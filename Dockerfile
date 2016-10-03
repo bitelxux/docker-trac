@@ -79,7 +79,7 @@ RUN echo 'htpasswd_file = /var/trac/.htpasswd' >> /var/trac/conf/trac.ini
 # Plantuml stuff
 RUN echo '' >> /var/trac/conf/trac.ini
 RUN echo '[plantuml]' >> /var/trac/conf/trac.ini
-RUN echo plantuml_jar = /opt/plantuml.jar
+RUN echo 'plantuml_jar = /opt/plantuml.jar' >> /var/trac/conf/trac.ini
 
 # permissions
 RUN trac-admin /var/trac permission add admin TRAC_ADMIN
