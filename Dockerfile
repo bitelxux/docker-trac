@@ -35,6 +35,7 @@ RUN easy_install https://trac-hacks.org/svn/fullblogplugin
 RUN easy_install https://trac-hacks.org/svn/tracwikiprintplugin/1.0
 RUN easy_install https://trac-hacks.org/svn/tocmacro/0.11
 RUN easy_install https://trac-hacks.org/svn/wikiextrasplugin/trunk
+RUN https://trac-hacks.org/svn/includemacro/tags/2.1.0
 RUN pip install GitHubSyncPlugin
 #RUN easy_install https://trac-hacks.org/svn/pdfpreviewplugin/1.0/
 #At this moment there is a bug which prevents install from the url 
@@ -57,6 +58,7 @@ RUN trac-admin /var/trac config set components githubsync.api.* enabled
 RUN trac-admin /var/trac config set components tractoc.* enabled
 RUN trac-admin /var/trac config set components tracwikiextras.* enabled
 RUN trac-admin /var/trac config set components tracfullblog.* enabled
+RUN trac-admin /var/trac config set components includemacro.* enabled
 RUN trac-admin /var/trac upgrade
 
 # enable htpasswd users in AccountManager plugin
