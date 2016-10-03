@@ -47,6 +47,7 @@ ADD TracPdfPreview-0.1.1-py2.7.egg /tmp
 RUN easy_install /tmp/TracPdfPreview-0.1.1-py2.7.egg
 
 # Super plantuml
+easy_install https://trac-hacks.org/svn/plantumlmacro/trunk
 RUN apt-get install -y openjdk-8-jre-headless
 RUN wget http://sourceforge.net/projects/plantuml/files/plantuml.jar/download -O /opt/plantuml.jar
 
