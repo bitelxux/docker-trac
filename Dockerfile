@@ -57,8 +57,8 @@ RUN trac-admin /var/trac config set components wikiprint.* enabled
 RUN trac-admin /var/trac config set components githubsync.api.* enabled
 RUN trac-admin /var/trac config set components tractoc.* enabled
 RUN trac-admin /var/trac config set components tracwikiextras.* enabled
-RUN trac-admin /var/trac config set components tracfullblog.* enabled
 RUN trac-admin /var/trac config set components includemacro.* enabled
+RUN trac-admin /var/trac config set components tracfullblog.* enabled
 RUN trac-admin /var/trac upgrade
 
 # enable htpasswd users in AccountManager plugin
