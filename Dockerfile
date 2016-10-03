@@ -48,7 +48,7 @@ RUN easy_install /tmp/TracPdfPreview-0.1.1-py2.7.egg
 
 # Super plantuml
 RUN apt-get install -y openjdk-8-jre-headless
-wget http://sourceforge.net/projects/plantuml/files/plantuml.jar/download -O /var/trac/plantuml/jar
+RUN wget http://sourceforge.net/projects/plantuml/files/plantuml.jar/download -O /var/trac/plantuml/jar
 
 # enable trac plugins
 RUN trac-admin /var/trac config set components acct_mgr.* enabled
