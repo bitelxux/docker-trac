@@ -74,7 +74,7 @@ RUN python /tmp/set_password.py /var/trac admin passw0rd
 # cache directory
 RUN mkdir -p /var/trac/files/cache
 
-# tweak trac.ini
+# Increase maximum size values
 RUN sed -i 's/262144/4000000/g' /var/trac/conf/trac.ini
 
 # logo
