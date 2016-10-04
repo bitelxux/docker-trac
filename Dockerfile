@@ -1,6 +1,6 @@
 # Bitelxux-Sept-2016
 
-FROM ubuntu:latest
+FROM ubuntu:16.04
 MAINTAINER bitelxux
 
 # Tell debconf to run in non-interactive mode
