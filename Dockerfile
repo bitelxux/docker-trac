@@ -53,6 +53,12 @@ RUN easy_install https://trac-hacks.org/svn/plantumlmacro/trunk
 RUN apt-get install -y openjdk-8-jre-headless
 RUN wget http://sourceforge.net/projects/plantuml/files/plantuml.jar/download -O /opt/plantuml.jar
 
+# sensitive tickets
+RUN easy_install https://trac-hacks.org/svn/sensitiveticketsplugin
+RUN trac-admin /var/trac config set components sensitivetickets.sensitivetickets.sensitiveticketspolicy enabled
+RUN sed -i 's/DefaultPermissionPolicy/SensitiveTicketsPolicy, DefaultPermissionPolicy/g' /var/trac/conf/trac.ini
+RUN trac-admin /var/trac upgrade
+
 # enable trac plugins
 RUN trac-admin /var/trac config set components acct_mgr.* enabled
 RUN trac-admin /var/trac config set components acct_mgr.web_ui.LoginModule enabled
