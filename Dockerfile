@@ -59,6 +59,13 @@ RUN trac-admin /var/trac config set components sensitivetickets.sensitivetickets
 RUN sed -i 's/DefaultPermissionPolicy/SensitiveTicketsPolicy, DefaultPermissionPolicy/g' /var/trac/conf/trac.ini
 RUN trac-admin /var/trac upgrade
 
+# Multiproject
+RUN easy_install https://trac-hacks.org/svn/simplemultiprojectplugin
+RUN trac-admin /var/trac config set components simplemultiproject.* enabled
+RUN sed -i 's/SensitiveTicketsPolicy/ProjectTicketsPolicy, SensitiveTicketsPolicy/g' /var/trac/conf/trac.ini
+RUN sed -i 's/\[ticket-custom\]/\[ticket-custom\]\nproject = select\nproject.label = Project\nproject.value =/g' /var/trac/conf/trac.ini
+RUN trac-admin /var/trac upgrade
+
 # enable trac plugins
 RUN trac-admin /var/trac config set components acct_mgr.* enabled
 RUN trac-admin /var/trac config set components acct_mgr.web_ui.LoginModule enabled
