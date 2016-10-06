@@ -116,6 +116,9 @@ ADD logo.png /var/trac/htdocs/your_project_logo.png
 RUN mv /var/trac/conf/trac.ini /etc
 RUN ln -s /etc/trac.ini /var/trac/conf
 
+# Last upgrade just in case
+RUN trac-admin /var/trac wiki upgrade
+
 # Expose the Trac port
 EXPOSE 8000
 CMD ["/usr/local/bin/start_trac.sh"]
