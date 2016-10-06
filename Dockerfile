@@ -41,12 +41,7 @@ RUN easy_install https://trac-hacks.org/svn/includemacro/trunk/
 RUN pip install GitHubSyncPlugin
 RUN easy_install https://trac-hacks.org/svn/tracpaththeme/0.12
 RUN easy_install https://trac-hacks.org/svn/tracwysiwygplugin/0.12
-#RUN easy_install https://trac-hacks.org/svn/pdfpreviewplugin/1.0/
-#At this moment there is a bug which prevents install from the url 
-#https://trac-hacks.org/ticket/12887
-#So we are distributing a patched version
-ADD TracPdfPreview-0.1.1-py2.7.egg /tmp
-RUN easy_install /tmp/TracPdfPreview-0.1.1-py2.7.egg
+RUN easy_install https://trac-hacks.org/svn/pdfpreviewplugin/1.0/
 
 # Super plantuml
 RUN easy_install https://trac-hacks.org/svn/plantumlmacro/trunk
@@ -100,7 +95,7 @@ RUN echo 'plantuml_jar = /opt/plantuml.jar' >> /var/trac/conf/trac.ini
 
 # permissions
 RUN trac-admin /var/trac permission add admin TRAC_ADMIN
-ADD set_password.py /tmp
+ADD set_password.py /tmp/
 RUN python /tmp/set_password.py /var/trac admin passw0rd
 
 # cache directory
