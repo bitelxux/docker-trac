@@ -28,25 +28,73 @@ RUN echo "#!/bin/bash" > /usr/local/bin/start_trac.sh
 RUN echo '/usr/local/bin/tracd --port 8000 /var/trac' >> /usr/local/bin/start_trac.sh
 RUN chmod +x /usr/local/bin/start_trac.sh
 
-# install trac plugins
-RUN easy_install https://trac-hacks.org/svn/accountmanagerplugin/tags/acct_mgr-0.4.4
-RUN easy_install https://trac-hacks.org/svn/graphvizplugin/trunk
-RUN easy_install https://trac-hacks.org/svn/codeexamplemacro
-RUN pip install TracThemeEngine
-RUN easy_install https://trac-hacks.org/svn/fullblogplugin
-RUN easy_install https://trac-hacks.org/svn/tracwikiprintplugin/1.0
-RUN easy_install https://trac-hacks.org/svn/tocmacro/0.11
-RUN easy_install https://trac-hacks.org/svn/wikiextrasplugin/trunk
-RUN easy_install https://trac-hacks.org/svn/includemacro/trunk/
-RUN pip install GitHubSyncPlugin
-RUN easy_install https://trac-hacks.org/svn/tracpaththeme/0.12
+# wysiwyg
 RUN easy_install https://trac-hacks.org/svn/tracwysiwygplugin/0.12
-RUN easy_install https://trac-hacks.org/svn/pdfpreviewplugin/1.0/
+RUN trac-admin /var/trac config set components tracwysiwyg.* enabled
 
-# Super plantuml
+# pdf preview
+RUN easy_install https://trac-hacks.org/svn/pdfpreviewplugin/1.0/
+RUN trac-admin /var/trac config set components tracpdfpreview.pdfpreview.pdfrenderer enabled
+
+# githubsync
+RUN pip install GitHubSyncPlugin
+RUN trac-admin /var/trac config set components githubsync.api.* enabled
+
+# include macro
+RUN easy_install https://trac-hacks.org/svn/includemacro/trunk/
+RUN trac-admin /var/trac config set components includemacro.* enabled
+
+# wikiextras
+RUN easy_install https://trac-hacks.org/svn/wikiextrasplugin/trunk
+RUN trac-admin /var/trac config set components tracwikiextras.* enabled
+
+# toc macro
+RUN easy_install https://trac-hacks.org/svn/tocmacro/0.11
+RUN trac-admin /var/trac config set components tractoc.* enabled
+
+# wikiprint
+RUN easy_install https://trac-hacks.org/svn/tracwikiprintplugin/1.0
+RUN trac-admin /var/trac config set components wikiprint.* enabled
+
+# fullblog
+RUN easy_install https://trac-hacks.org/svn/fullblogplugin
+RUN trac-admin /var/trac config set components tracfullblog.* enabled
+RUN trac-admin /var/trac upgrade
+
+# tractheme engine
+RUN pip install TracThemeEngine
+RUN trac-admin /var/trac config set components themeengine.* enabled
+
+# tracpath theme
+RUN easy_install https://trac-hacks.org/svn/tracpaththeme/0.12
+RUN trac-admin /var/trac config set components tracpaththeme.* enabled
+
+# codeexample macro
+RUN easy_install https://trac-hacks.org/svn/codeexamplemacro
+RUN trac-admin /var/trac config set components codeexample.code_example_processor.* enabled
+
+# graphviz
+RUN easy_install https://trac-hacks.org/svn/graphvizplugin/trunk
+RUN trac-admin /var/trac config set components graphviz.graphviz.graphviz enabled
+
+# accountmanager
+RUN easy_install https://trac-hacks.org/svn/accountmanagerplugin/tags/acct_mgr-0.4.4
+RUN trac-admin /var/trac config set components acct_mgr.* enabled
+RUN trac-admin /var/trac config set components trac.web.auth.LoginModule disable
+RUN echo '' >> /var/trac/conf/trac.ini
+RUN echo '[account-manager]' >> /var/trac/conf/trac.ini
+RUN echo 'password_store = HtPasswdStore' >> /var/trac/conf/trac.ini
+RUN echo 'htpasswd_hash_type =' >> /var/trac/conf/trac.ini
+RUN echo 'htpasswd_file = /var/trac/.htpasswd' >> /var/trac/conf/trac.ini
+
+# plantuml
 RUN easy_install https://trac-hacks.org/svn/plantumlmacro/trunk
 RUN apt-get install -y openjdk-8-jre-headless
 RUN wget http://sourceforge.net/projects/plantuml/files/plantuml.jar/download -O /opt/plantuml.jar
+RUN trac-admin /var/trac config set components plantuml.* enabled
+RUN echo '' >> /var/trac/conf/trac.ini
+RUN echo '[plantuml]' >> /var/trac/conf/trac.ini
+RUN echo 'plantuml_jar = /opt/plantuml.jar' >> /var/trac/conf/trac.ini
 
 # sensitive tickets
 RUN easy_install https://trac-hacks.org/svn/sensitiveticketsplugin
@@ -54,44 +102,12 @@ RUN trac-admin /var/trac config set components sensitivetickets.sensitivetickets
 RUN sed -i 's/permission_policies =/permission_policies = SensitiveTicketsPolicy,/g' /var/trac/conf/trac.ini
 RUN trac-admin /var/trac upgrade
 
-# Multiproject
+# multiproject
 RUN easy_install https://trac-hacks.org/svn/simplemultiprojectplugin
 RUN trac-admin /var/trac config set components simplemultiproject.* enabled
 RUN sed -i 's/permission_policies =/permission_policies = ProjectTicketsPolicy,/g' /var/trac/conf/trac.ini
 RUN sed -i 's/\[ticket-custom\]/\[ticket-custom\]\nproject = select\nproject.label = Project\nproject.value =/g' /var/trac/conf/trac.ini
 RUN trac-admin /var/trac upgrade
-
-# enable trac plugins
-RUN trac-admin /var/trac config set components acct_mgr.* enabled
-RUN trac-admin /var/trac config set components acct_mgr.web_ui.LoginModule enabled
-RUN trac-admin /var/trac config set components trac.web.auth.LoginModule disable
-RUN trac-admin /var/trac config set components graphviz.graphviz.graphviz enabled
-RUN trac-admin /var/trac config set components codeexample.code_example_processor.* enabled
-RUN trac-admin /var/trac config set components tracpdfpreview.pdfpreview.pdfrenderer enabled
-RUN trac-admin /var/trac config set components tracopt.versioncontrol.git.* enabled
-RUN trac-admin /var/trac config set components themeengine.* enabled
-RUN trac-admin /var/trac config set components wikiprint.* enabled
-RUN trac-admin /var/trac config set components githubsync.api.* enabled
-RUN trac-admin /var/trac config set components tractoc.* enabled
-RUN trac-admin /var/trac config set components tracwikiextras.* enabled
-RUN trac-admin /var/trac config set components includemacro.* enabled
-RUN trac-admin /var/trac config set components plantuml.* enabled
-RUN trac-admin /var/trac config set components tracpaththeme.* enabled
-RUN trac-admin /var/trac config set components tracwysiwyg.* enabled
-RUN trac-admin /var/trac config set components tracfullblog.* enabled
-RUN trac-admin /var/trac upgrade
-
-# enable htpasswd users in AccountManager plugin
-RUN echo '' >> /var/trac/conf/trac.ini
-RUN echo '[account-manager]' >> /var/trac/conf/trac.ini
-RUN echo 'password_store = HtPasswdStore' >> /var/trac/conf/trac.ini
-RUN echo 'htpasswd_hash_type =' >> /var/trac/conf/trac.ini
-RUN echo 'htpasswd_file = /var/trac/.htpasswd' >> /var/trac/conf/trac.ini
-
-# Plantuml stuff
-RUN echo '' >> /var/trac/conf/trac.ini
-RUN echo '[plantuml]' >> /var/trac/conf/trac.ini
-RUN echo 'plantuml_jar = /opt/plantuml.jar' >> /var/trac/conf/trac.ini
 
 # permissions
 RUN trac-admin /var/trac permission add admin TRAC_ADMIN
@@ -110,9 +126,6 @@ ADD logo.png /var/trac/htdocs/your_project_logo.png
 # Move trac.ini out of the volume
 RUN mv /var/trac/conf/trac.ini /etc
 RUN ln -s /etc/trac.ini /var/trac/conf
-
-# Last upgrade just in case
-RUN trac-admin /var/trac wiki upgrade
 
 # Expose the Trac port
 EXPOSE 8000
