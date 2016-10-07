@@ -1,6 +1,8 @@
 docker-trac
 ===========
 
+http://94.177.253.187:8000/trac/blog/Docker%20trac
+
 Sept-Oct 2016 Bitelxux
 
 This is a dockerized trac server.
