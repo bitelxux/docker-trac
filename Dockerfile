@@ -51,13 +51,13 @@ RUN wget http://sourceforge.net/projects/plantuml/files/plantuml.jar/download -O
 # sensitive tickets
 RUN easy_install https://trac-hacks.org/svn/sensitiveticketsplugin
 RUN trac-admin /var/trac config set components sensitivetickets.sensitivetickets.sensitiveticketspolicy enabled
-RUN sed -i 's/DefaultPermissionPolicy/SensitiveTicketsPolicy, DefaultPermissionPolicy/g' /var/trac/conf/trac.ini
+RUN sed -i 's/permission_policies =/permission_policies = SensitiveTicketsPolicy,/g' /var/trac/conf/trac.ini
 RUN trac-admin /var/trac upgrade
 
 # Multiproject
 RUN easy_install https://trac-hacks.org/svn/simplemultiprojectplugin
 RUN trac-admin /var/trac config set components simplemultiproject.* enabled
-RUN sed -i 's/SensitiveTicketsPolicy/ProjectTicketsPolicy, SensitiveTicketsPolicy/g' /var/trac/conf/trac.ini
+RUN sed -i 's/permission_policies =/permission_policies = ProjectTicketsPolicy,/g' /var/trac/conf/trac.ini
 RUN sed -i 's/\[ticket-custom\]/\[ticket-custom\]\nproject = select\nproject.label = Project\nproject.value =/g' /var/trac/conf/trac.ini
 RUN trac-admin /var/trac upgrade
 
