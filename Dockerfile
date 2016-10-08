@@ -109,7 +109,7 @@ RUN sed -i 's/permission_policies =/permission_policies = ProjectTicketsPolicy,/
 RUN sed -i 's/\[ticket-custom\]/\[ticket-custom\]\nproject = select\nproject.label = Project\nproject.value =/g' /var/trac/conf/trac.ini
 RUN trac-admin /var/trac upgrade
 
-# private tickets
+# private wikis
 RUN easy_install https://trac-hacks.org/svn/privatewikiplugin/trunk/
 RUN trac-admin /var/trac config set components privatewiki.api.privatewikisystem enabled
 RUN sed -i 's/permission_policies =/permission_policies = PrivateWikiSystem,/g' /var/trac/conf/trac.ini
