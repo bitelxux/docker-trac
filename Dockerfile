@@ -49,8 +49,8 @@ RUN easy_install https://trac-hacks.org/svn/wikiextrasplugin/trunk
 RUN trac-admin /var/trac config set components tracwikiextras.* enabled
 
 # toc macro
-RUN easy_install https://trac-hacks.org/svn/tocmacro/0.11
-RUN trac-admin /var/trac config set components tractoc.* enabled
+#RUN easy_install https://trac-hacks.org/svn/tocmacro/0.11
+#RUN trac-admin /var/trac config set components tractoc.* enabled
 
 # wikiprint
 RUN easy_install https://trac-hacks.org/svn/tracwikiprintplugin/1.0
@@ -108,6 +108,14 @@ RUN trac-admin /var/trac config set components simplemultiproject.* enabled
 RUN sed -i 's/permission_policies =/permission_policies = ProjectTicketsPolicy,/g' /var/trac/conf/trac.ini
 RUN sed -i 's/\[ticket-custom\]/\[ticket-custom\]\nproject = select\nproject.label = Project\nproject.value =/g' /var/trac/conf/trac.ini
 RUN trac-admin /var/trac upgrade
+
+# private tickets
+RUN easy_install https://trac-hacks.org/svn/privatewikiplugin/trunk/
+RUN trac-admin /var/trac config set components privatewiki.api.privatewikisystem enabled
+RUN sed -i 's/permission_policies =/permission_policies = PrivateWikiSystem,/g' /var/trac/conf/trac.ini
+RUN echo "" >> /var/trac/conf/trac.ini
+RUN echo "[privatewikis]" >> /var/trac/conf/trac.ini
+RUN echo "private_wikis = " >> /var/trac/conf/trac.ini
 
 # permissions
 RUN trac-admin /var/trac permission add admin TRAC_ADMIN
