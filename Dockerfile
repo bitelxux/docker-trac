@@ -1,4 +1,4 @@
-# Bitelxux Sept-Oct--2016
+# Bitelxux Sept-Oct-2016
 
 FROM ubuntu:16.04
 MAINTAINER bitelxux
