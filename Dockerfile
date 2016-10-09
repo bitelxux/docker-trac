@@ -36,6 +36,9 @@ RUN trac-admin /var/trac config set components tracwysiwyg.* enabled
 RUN easy_install https://trac-hacks.org/svn/pdfpreviewplugin/1.0/
 RUN trac-admin /var/trac config set components tracpdfpreview.pdfpreview.pdfrenderer enabled
 
+# enable git repositories
+RUN trac-admin /var/trac config set components tracopt.versioncontrol.git.* enabled
+
 # githubsync
 RUN pip install GitHubSyncPlugin
 RUN trac-admin /var/trac config set components githubsync.api.* enabled
@@ -49,8 +52,8 @@ RUN easy_install https://trac-hacks.org/svn/wikiextrasplugin/trunk
 RUN trac-admin /var/trac config set components tracwikiextras.* enabled
 
 # toc macro
-#RUN easy_install https://trac-hacks.org/svn/tocmacro/0.11
-#RUN trac-admin /var/trac config set components tractoc.* enabled
+RUN easy_install https://trac-hacks.org/svn/tocmacro/0.11
+RUN trac-admin /var/trac config set components tractoc.* enabled
 
 # wikiprint
 RUN easy_install https://trac-hacks.org/svn/tracwikiprintplugin/1.0
@@ -127,6 +130,9 @@ RUN mkdir -p /var/trac/files/cache
 
 # Increase maximum size values
 RUN sed -i 's/262144/4000000/g' /var/trac/conf/trac.ini
+
+# Set minimum username length to 3
+RUN sed -i 's/\[account-manager\]/\[account-manager\]\nusername_regexp = (?i)^\[A-Z0-9.\\-_\]{3,}$/g' /var/trac/conf/trac.ini
 
 # logo
 ADD logo.png /var/trac/htdocs/your_project_logo.png
