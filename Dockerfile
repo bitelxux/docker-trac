@@ -18,10 +18,13 @@ RUN apt-get install -y git
 RUN apt-get install -y vim
 RUN apt-get install -y graphviz
 RUN apt-get install -y python-imaging
+RUN apt-get install -y docutils-common
 RUN pip install reportlab html5lib pypdf
+RUN pip install pip --upgrade
 RUN pip install trac mysql-python
-RUN pip install docutils
 RUN pip install pygments
+RUN pip install docutils
+RUN pip install trac --upgrade
 
 RUN trac-admin /var/trac initenv project sqlite:db/trac.db
 RUN echo "#!/bin/bash" > /usr/local/bin/start_trac.sh
