@@ -28,6 +28,7 @@ RUN pip install trac --upgrade
 
 RUN trac-admin /var/trac initenv project sqlite:db/trac.db
 RUN echo "#!/bin/bash" > /usr/local/bin/start_trac.sh
+RUN echo 'service cron start' >> /usr/local/bin/start_trac.sh
 RUN echo '/usr/local/bin/tracd --port 8000 /var/trac' >> /usr/local/bin/start_trac.sh
 RUN chmod +x /usr/local/bin/start_trac.sh
 
