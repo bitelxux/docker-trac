@@ -117,7 +117,7 @@ RUN trac-admin /var/trac/main upgrade
 # private wikis
 RUN easy_install https://trac-hacks.org/svn/privatewikiplugin/trunk/
 RUN trac-admin /var/trac/main config set components privatewiki.api.privatewikisystem enabled
-		RUN sed -i 's/permission_policies =/permission_policies = PrivateWikiSystem,/g' /var/trac/main/conf/trac.ini
+RUN sed -i 's/permission_policies =/permission_policies = PrivateWikiSystem,/g' /var/trac/main/conf/trac.ini
 RUN echo "" >> /var/trac/main/conf/trac.ini
 RUN echo "[privatewikis]" >> /var/trac/main/conf/trac.ini
 RUN echo "private_wikis = " >> /var/trac/main/conf/trac.ini
