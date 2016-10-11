@@ -30,6 +30,10 @@ RUN mkdir -p /var/trac
 
 RUN trac-admin /var/trac initenv project sqlite:db/trac.db
 
+# autocomplete
+RUN easy_install https://trac-hacks.org/svn/wikiautocompleteplugin
+RUN trac-admin /var/trac config set components wikiautocomplete.web_ui.wikiautocompletemodule enabled
+
 # wysiwyg
 RUN easy_install https://trac-hacks.org/svn/tracwysiwygplugin/0.12
 RUN trac-admin /var/trac config set components tracwysiwyg.* enabled
