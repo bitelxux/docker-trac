@@ -128,8 +128,9 @@ RUN echo "private_wikis = " >> /var/trac/conf/trac.ini
 
 # permissions
 RUN trac-admin /var/trac permission add admin TRAC_ADMIN
-ADD set_password.py /tmp
-RUN python /tmp/set_password.py /var/trac admin passw0rd
+ADD set_password.py /usr/local/bin
+RUN chmod +x /usr/local/bin/set_password.py
+RUN /usr/local/bin/set_password.py /var/trac admin passw0rd
 
 # cache directory
 RUN mkdir -p /var/trac/files/cache
