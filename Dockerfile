@@ -1,6 +1,6 @@
 # Javalinas-Bitelxux Sept-Oct-2016
 
-FROM ubuntu:16.04
+FROM debian:latest
 MAINTAINER bitelxux
 
 # Tell debconf to run in non-interactive mode
@@ -18,6 +18,7 @@ RUN apt-get install -y git
 RUN apt-get install -y vim
 RUN apt-get install -y graphviz
 RUN apt-get install -y python-imaging
+RUN apt-get install -y python-dev
 RUN apt-get install -y docutils-common
 RUN pip install reportlab html5lib pypdf
 RUN pip install pip --upgrade
@@ -98,7 +99,7 @@ RUN echo 'htpasswd_file = /var/trac/.htpasswd' >> /var/trac/conf/trac.ini
 
 # plantuml
 RUN easy_install https://trac-hacks.org/svn/plantumlmacro/trunk
-RUN apt-get install -y openjdk-8-jre-headless
+RUN apt-get install -y openjdk-7-jre-headless
 RUN wget http://sourceforge.net/projects/plantuml/files/plantuml.jar/download -O /opt/plantuml.jar
 RUN trac-admin /var/trac config set components plantuml.* enabled
 RUN echo '' >> /var/trac/conf/trac.ini
@@ -182,6 +183,7 @@ RUN ln -s /etc/apache2/conf.d/ssl.conf /etc/apache2/sites-enabled/ssl.conf
 RUN ln -s /etc/apache2/conf.d/trac.conf /etc/apache2/sites-enabled/trac.conf
 
 COPY apache2/ssl.conf /etc/apache2/conf.d/
+COPY apache2/ports.conf /etc/apache2/
 
 # Expose the Trac ports
 EXPOSE 443
