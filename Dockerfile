@@ -191,7 +191,7 @@ RUN trac-admin /var/trac config set components tracpaththeme.* enabled
 
 # tseve theme
 RUN easy_install https://trac-hacks.org/svn/tsevetheme
-RUN trac-admin /var/trac config set components tsevetheme = enabled
+RUN trac-admin /var/trac config set components tsevetheme.* enabled
 
 # Expose the Trac ports
 EXPOSE 443
