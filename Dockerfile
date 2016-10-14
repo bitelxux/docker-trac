@@ -31,6 +31,10 @@ RUN mkdir -p /var/trac
 
 RUN trac-admin /var/trac initenv project sqlite:db/trac.db
 
+# newsflash
+RUN easy_install https://trac-hacks.org/svn/newsflashmacro/0.11
+RUN trac-admin /var/trac config set components newsflash.* enabled
+
 # autocomplete
 RUN easy_install https://trac-hacks.org/svn/wikiautocompleteplugin
 RUN trac-admin /var/trac config set components wikiautocomplete.web_ui.wikiautocompletemodule enabled
