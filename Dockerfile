@@ -79,10 +79,6 @@ RUN trac-admin /var/trac upgrade
 RUN pip install TracThemeEngine
 RUN trac-admin /var/trac config set components themeengine.* enabled
 
-# tracpath theme
-RUN easy_install https://trac-hacks.org/svn/tracpaththeme/0.12
-RUN trac-admin /var/trac config set components tracpaththeme.* enabled
-
 # codeexample macro
 RUN easy_install https://trac-hacks.org/svn/codeexamplemacro
 RUN trac-admin /var/trac config set components codeexample.code_example_processor.* enabled
@@ -188,6 +184,14 @@ RUN ln -s /etc/apache2/conf.d/trac.conf /etc/apache2/sites-enabled/trac.conf
 
 COPY apache2/ssl.conf /etc/apache2/conf.d/
 COPY apache2/ports.conf /etc/apache2/
+
+# tracpath theme
+RUN easy_install https://trac-hacks.org/svn/tracpaththeme/0.12
+RUN trac-admin /var/trac config set components tracpaththeme.* enabled
+
+# tseve theme
+RUN easy_install https://trac-hacks.org/svn/tsevetheme
+RUN trac-admin /var/trac config set components tsevetheme = enabled
 
 # Expose the Trac ports
 EXPOSE 443
