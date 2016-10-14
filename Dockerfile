@@ -127,6 +127,15 @@ RUN echo "" >> /var/trac/conf/trac.ini
 RUN echo "[privatewikis]" >> /var/trac/conf/trac.ini
 RUN echo "private_wikis = " >> /var/trac/conf/trac.ini
 
+# tracpath theme
+RUN easy_install https://trac-hacks.org/svn/tracpaththeme/0.12
+RUN trac-admin /var/trac config set components tracpaththeme.* enabled
+
+# tseve theme
+RUN easy_install https://trac-hacks.org/svn/tsevetheme
+RUN trac-admin /var/trac config set components tsevetheme.* enabled
+
+
 # permissions
 RUN trac-admin /var/trac permission add admin TRAC_ADMIN
 ADD set_password.py /usr/local/bin
@@ -184,14 +193,6 @@ RUN ln -s /etc/apache2/conf.d/trac.conf /etc/apache2/sites-enabled/trac.conf
 
 COPY apache2/ssl.conf /etc/apache2/conf.d/
 COPY apache2/ports.conf /etc/apache2/
-
-# tracpath theme
-RUN easy_install https://trac-hacks.org/svn/tracpaththeme/0.12
-RUN trac-admin /var/trac config set components tracpaththeme.* enabled
-
-# tseve theme
-RUN easy_install https://trac-hacks.org/svn/tsevetheme
-RUN trac-admin /var/trac config set components tsevetheme.* enabled
 
 # Expose the Trac ports
 EXPOSE 443
