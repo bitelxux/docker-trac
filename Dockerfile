@@ -187,7 +187,7 @@ RUN apt-get install -y awstats libgeo-ipfree-perl libnet-ip-perl
 
 # Enable apache logs
 RUN echo "" >> /etc/apache2/apache2.conf
-RUN echo "CustomLog /var/log/apache2/access.log combined" >> /etc/apache2/apache.conf
+RUN echo "CustomLog /var/log/apache2/access.log combined" >> /etc/apache2/apache2.conf
 
 # Setup awstats for MY_SITE.
 # Change the value at the begining of this file or
