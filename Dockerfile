@@ -193,9 +193,34 @@ RUN ln -s /etc/apache2/conf.d/trac.conf /etc/apache2/sites-enabled/trac.conf
 
 COPY apache2/ssl.conf /etc/apache2/conf.d/
 COPY apache2/ports.conf /etc/apache2/
+COPY apache2/index.html /var/www/html
+
+# Awstats !!
+RUN apt-get install -y awstats libgeo-ipfree-perl libnet-ip-perl
+
+# Enable apache logs
+RUN echo "" >> /etc/apache2/apache2.conf
+RUN echo "CustomLog /var/log/apache2/access.log combined" >> /etc/apache2/apache.conf
+
+# Setup awstats por localhost
+# See https://room1408.tk/trac/blog/awstats to add more domains
+RUN sed -i 's/^LogFormat=4/LogFormat=1/g' /etc/awstats/awstats.conf
+RUN sed -i 's/^SiteDomain=""/SiteDomain="localhost"/g' /etc/awstats/awstats.conf
+
+# Load some cool awstats plugins
+RUN echo "" >> /etc/awstats/awstats.conf
+RUN echo 'LoadPlugin="tooltips"' >> /etc/awstats/awstats.conf
+RUN echo 'LoadPlugin="graphgooglechartapi"' >> /etc/awstats/awstats.conf
+RUN echo 'LoadPlugin="geoipfree"' >> /etc/awstats/awstats.conf
+
+# Enable apache2 cgi
+RUN a2enmod cgi
+
+# Run first awstats update
+RUN /usr/lib/cgi-bin/awstats.pl -config=localhost -update
 
 # Expose the Trac ports
 EXPOSE 443
 EXPOSE 80
-CMD /usr/sbin/service apache2 start && tail -F /var/log/apache2/error.log
+CMD service cron start && /usr/sbin/service apache2 start && tail -F /var/log/apache2/error.log
 
