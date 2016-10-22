@@ -6,26 +6,13 @@ MAINTAINER bitelxux
 # Tell debconf to run in non-interactive mode
 ENV DEBIAN_FRONTEND noninteractive
 
-# Make sure the repository information is up to date
-RUN apt-get update
+# Site domain. If you are planning to access this
+# site using a domain name, change it in the line bellow
+ENV MY_SITE localhost
 
-RUN apt-get install -y cron
-RUN apt-get install -y wget
-RUN apt-get install -y python-pip
-RUN apt-get install -y libmysqlclient-dev
-RUN apt-get install -y subversion
-RUN apt-get install -y git
-RUN apt-get install -y vim
-RUN apt-get install -y graphviz
-RUN apt-get install -y python-imaging
-RUN apt-get install -y python-dev
-RUN apt-get install -y docutils-common
-RUN pip install reportlab html5lib pypdf
-RUN pip install pip --upgrade
-RUN pip install trac mysql-python
-RUN pip install pygments
-RUN pip install docutils
-RUN pip install trac --upgrade
+# Make sure the repository information is up to date
+COPY install_packages.sh /tmp
+RUN sh /tmp/install_packages.sh
 
 RUN mkdir -p /var/trac
 
@@ -202,25 +189,25 @@ RUN apt-get install -y awstats libgeo-ipfree-perl libnet-ip-perl
 RUN echo "" >> /etc/apache2/apache2.conf
 RUN echo "CustomLog /var/log/apache2/access.log combined" >> /etc/apache2/apache.conf
 
-# Setup awstats por localhost
-# See https://room1408.tk/trac/blog/awstats to add more domains
+# Setup awstats for MY_SITE.
+# Change the value at the begining of this file or
+# see https://room1408.tk/trac/blog/awstats to add more domains
 RUN sed -i 's/^LogFormat=4/LogFormat=1/g' /etc/awstats/awstats.conf
-RUN sed -i 's/^SiteDomain=""/SiteDomain="localhost"/g' /etc/awstats/awstats.conf
+RUN sed -i "s/^SiteDomain=\"\"/SiteDomain=\"${MY_SITE}\"/g" /etc/awstats/awstats.conf
 
 # Load some cool awstats plugins
-RUN echo "" >> /etc/awstats/awstats.conf
 RUN echo 'LoadPlugin="tooltips"' >> /etc/awstats/awstats.conf
 RUN echo 'LoadPlugin="graphgooglechartapi"' >> /etc/awstats/awstats.conf
 RUN echo 'LoadPlugin="geoipfree"' >> /etc/awstats/awstats.conf
 
+# Fix html redirections
+RUN sed -i "s/localhost/${MY_SITE}/g" /var/www/html/index.html
+RUN sed -i "s/localhost/${MY_SITE}/g" /etc/apache2/conf.d/ssl.conf
+
 # Enable apache2 cgi
 RUN a2enmod cgi
-
-# Run first awstats update
-RUN /usr/lib/cgi-bin/awstats.pl -config=localhost -update
 
 # Expose the Trac ports
 EXPOSE 443
 EXPOSE 80
 CMD service cron start && /usr/sbin/service apache2 start && tail -F /var/log/apache2/error.log
-
