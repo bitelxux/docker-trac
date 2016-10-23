@@ -182,6 +182,10 @@ COPY apache2/ssl.conf /etc/apache2/conf.d/
 COPY apache2/ports.conf /etc/apache2/
 COPY apache2/index.html /var/www/html
 
+# WikiStart page
+COPY WikiStart.txt /tmp
+RUN trac-admin /var/trac wiki import WikiStart /tmp/WikiStart.txt
+
 # Awstats !!
 RUN apt-get install -y awstats libgeo-ipfree-perl libnet-ip-perl
 
