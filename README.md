@@ -28,6 +28,8 @@ This trac contains some very cool stuff already:
 
 And all of this just deploying this container !!
 
+Latest documentation: https://room1408.tk/trac/blog/docker-trac
+
 Enjoy !!
 
-Oct-2016 Bitelxu
+Oct-2016 Bitelxux
