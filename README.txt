@@ -39,7 +39,7 @@ docker run -d -p 443:443 -v trac:/var/trac --add-host dockerhost:<dockerhostip> 
 
 * Test the container
 
-Point your preferred browser to https://<yourip> and enjoy !!
+Point your preferred browser to https://<yourip|name> and enjoy !!
 
 * Login into the running container
 
