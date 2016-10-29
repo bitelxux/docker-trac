@@ -48,7 +48,6 @@ This trac contains some very cool stuff already:
 * [[http://trac-hacks.org/wiki/AccountManagerPlugin|AccountManagerPlugin]] Well ... this one is mandatory as default users management simply sucks ...
 * [[http://trac-hacks.org/wiki/FullBlogPlugin|FullBlogPlugin]] May be it is not as beautiful as wordpress, but it makes really easy to write posts including code, specially if you include the code directly from a repository
 * [[http://trac-hacks.org/wiki/IncludeMacro|IncludeMacro]] Another nice plugin to include different things in a wiki or blog
-* [[http://trac-hacks.org/wiki/NewsFlashMacro|NewsFlashMacro]] Shows a window with whatever you want ... similar to #!box
 * TracPdfPreview 0.1.2, allows the preview of a pdf without the need of download it. Nice.
 * [[https://trac-hacks.org/wiki/ThemeEnginePlugin|ThemeEnginePlugin]] Yes, default trac aspect looks a little bit old. This plugin allows the use of different themes. 
 * [[http://trac-hacks.org/wiki/TracpathTheme|TracpathTheme]] this plugin includes some alternative themes.
