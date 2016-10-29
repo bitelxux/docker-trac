@@ -118,9 +118,6 @@ RUN trac-admin /var/trac config set components tracpaththeme.* enabled
 RUN easy_install https://trac-hacks.org/svn/tsevetheme
 RUN trac-admin /var/trac config set components tsevetheme.* enabled
 
-# Other packages
-# RUN pip_install textile
-
 # permissions
 RUN trac-admin /var/trac permission add admin TRAC_ADMIN
 ADD set_password.py /usr/local/bin
