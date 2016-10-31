@@ -59,6 +59,9 @@ RUN trac-admin /var/trac config set components wikiprint.* enabled
 RUN easy_install https://trac-hacks.org/svn/fullblogplugin
 RUN trac-admin /var/trac config set components tracfullblog.* enabled
 RUN trac-admin /var/trac upgrade
+COPY BlogDraftPlugin.py /var/trac/plugins
+RUN trac-admin /var/trac config set components blogdraftplugin.* enabled
+RUN sed -i 's/permission_policies =/permission_policies = BlogDraftPlugin,/g' /var/trac/conf/trac.ini
 
 # tractheme engine
 RUN pip install TracThemeEngine
