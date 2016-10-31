@@ -10,6 +10,8 @@ ENV DEBIAN_FRONTEND noninteractive
 # site using a domain name, change it in the line bellow
 ENV MY_SITE localhost
 
+ENV PKG_RESOURCES_CACHE_ZIP_MANIFESTS 1
+
 # Make sure the repository information is up to date
 COPY install_packages.sh /tmp
 RUN sh /tmp/install_packages.sh
