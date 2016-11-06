@@ -51,7 +51,7 @@ class BlogDraftPlugin(Component):
         if resource.realm == 'blog' and resource.id:
             the_post = BlogPost(self.env, resource.id, resource.version)
             for category in the_post.category_list:
-                if category in self.draft and the_post.author != username:
+                if category in self.draft and the_post.author.lower() != username.lower():
                     # Block all access regardless
                     return False
 
@@ -64,7 +64,7 @@ class BlogDraftPlugin(Component):
             if category in self.draft:
                 if req.authname == 'anonymous':
                     return [(None, 'You need to be logged in to save as draft.')]
-                elif req.authname != fields['author']:
+                elif req.authname.lower() != fields['author'].lower():
                     return [(None, "Cannot save draft for an author that isn't you.")]
         return []
 
