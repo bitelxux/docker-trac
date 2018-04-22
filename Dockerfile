@@ -195,7 +195,7 @@ RUN echo "CustomLog /var/log/apache2/access.log combined" >> /etc/apache2/apache
 
 # Setup awstats for MY_SITE.
 # Change the value at the begining of this file or
-# see https://room1408.tk/trac/blog/awstats to add more domains
+# see https://battlefield1408.tk/trac/blog/awstats to add more domains
 RUN sed -i 's/^LogFormat=4/LogFormat=1/g' /etc/awstats/awstats.conf
 RUN sed -i "s/^SiteDomain=\"\"/SiteDomain=\"${MY_SITE}\"/g" /etc/awstats/awstats.conf
 

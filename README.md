@@ -21,13 +21,13 @@ This trac contains some very cool stuff already:
 * http://trac-hacks.org/wiki/TocMacro Almost a must ... with it you can add table of contents to your pages.
 * http://trac-hacks.org/wiki/WikiExtrasPlugin Adds a lot of nice features. Check out the documentation. It is worth it !
 * http://trac-hacks.org/wiki/TracWysiwygPlugin Makes the edition a little bit more comfortable.
-* TseveTheme 1.0, just another cool theme. The one I'm using at https://room1408.tk
+* TseveTheme 1.0, just another cool theme. The one I'm using at https://battlefield1408.tk
 * WikiAutoComplete 1.0, offers some autocompletion when you are typing.
 * http://www.awstats.org !! This docker includes awstats statistics out of the box.
 
 And all of this just deploying this container !!
 
-Latest documentation: https://room1408.tk/trac/blog/docker-trac
+Latest documentation: https://battlefield1408.tk/trac/blog/docker-trac
 
 Enjoy !!
 
